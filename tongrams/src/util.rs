@@ -57,7 +57,7 @@ where
     P: AsRef<Path>,
 {
     let records = load_records_from_file(filepath, fmt)?;
-    let grams: Vec<Gram> = records.iter().map(|r| r.gram()).collect();
+    let grams: Vec<Gram<u8>> = records.iter().map(|r| r.gram()).collect();
     let vocab = DoubleArrayVocabulary::build(&grams)?;
     Ok(vocab)
 }

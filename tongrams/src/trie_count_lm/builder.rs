@@ -81,7 +81,7 @@ where
             records
         };
 
-        let grams: Vec<Gram> = records.iter().map(|r| r.gram()).collect();
+        let grams: Vec<Gram<u8>> = records.iter().map(|r| r.gram()).collect();
         self.vocab = V::build(&grams)?;
 
         let mut count_ranks = Vec::with_capacity(records.len());

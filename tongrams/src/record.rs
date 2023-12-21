@@ -18,7 +18,7 @@ impl CountRecord {
 
     /// Gets the [`Gram`].
     #[inline]
-    pub fn gram(&self) -> Gram {
+    pub fn gram(&self) -> Gram<u8> {
         Gram::new(self.gram.as_bytes())
     }
 
@@ -50,7 +50,7 @@ impl ProbRecord {
 
     /// Gets the [`Gram`].
     #[inline]
-    pub fn gram(&self) -> Gram {
+    pub fn gram(&self) -> Gram<u8> {
         Gram::new(self.gram.as_bytes())
     }
 

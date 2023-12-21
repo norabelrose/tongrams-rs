@@ -12,7 +12,7 @@ pub struct SortedArrayMapper {
 impl SortedArrayMapper {
     #[inline(always)]
     #[allow(clippy::wrong_self_convention)]
-    pub fn from_gram<V>(&mut self, gram: Gram, vocab: &V) -> bool
+    pub fn from_gram<V>(&mut self, gram: Gram<u8>, vocab: &V) -> bool
     where
         V: Vocabulary,
     {

@@ -19,7 +19,7 @@ impl Vocabulary for SimpleVocabulary {
         }
     }
 
-    fn build(tokens: &[Gram]) -> Result<Self> {
+    fn build(tokens: &[Gram<u8>]) -> Result<Self> {
         let mut map = HashMap::new();
         for (id, token) in tokens.iter().enumerate() {
             if let Some(v) = map.insert(token.to_string(), id) {
@@ -56,7 +56,7 @@ impl Vocabulary for SimpleVocabulary {
         serde_json::json!({})
     }
 
-    fn get(&self, token: Gram) -> Option<usize> {
+    fn get(&self, token: Gram<u8>) -> Option<usize> {
         self.map.get(&token.to_string()).copied()
     }
 }

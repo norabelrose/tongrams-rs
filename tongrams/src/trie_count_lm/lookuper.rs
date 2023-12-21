@@ -32,7 +32,7 @@ where
 
     /// Looks up a gram, returning the count.
     #[inline(always)]
-    pub fn with_gram(&mut self, gram: Gram) -> Option<usize> {
+    pub fn with_gram(&mut self, gram: Gram<u8>) -> Option<usize> {
         if self.mapper.from_gram(gram, &self.trie.vocab) {
             self.find()
         } else {

@@ -14,7 +14,7 @@ pub trait Vocabulary {
     fn new() -> Self;
 
     /// Builds a [`Vocabulary`] from a sequence of tokens.
-    fn build(tokens: &[Gram]) -> Result<Self>
+    fn build(tokens: &[Gram<u8>]) -> Result<Self>
     where
         Self: Sized;
 
@@ -33,7 +33,7 @@ pub trait Vocabulary {
     fn memory_statistics(&self) -> serde_json::Value;
 
     /// Looks up a token.
-    fn get(&self, token: Gram) -> Option<usize>;
+    fn get(&self, token: Gram<u8>) -> Option<usize>;
 }
 
 #[cfg(test)]

@@ -18,7 +18,7 @@ impl Vocabulary for DoubleArrayVocabulary {
         Self { data: Vec::new() }
     }
 
-    fn build(tokens: &[Gram]) -> Result<Self> {
+    fn build(tokens: &[Gram<u8>]) -> Result<Self> {
         if (tokens.len() >> 31) != 0 {
             return Err(anyhow!(
                 "The number of tokens must be represented in 31 bits."
@@ -68,7 +68,7 @@ impl Vocabulary for DoubleArrayVocabulary {
     }
 
     #[inline(always)]
-    fn get(&self, token: Gram) -> Option<usize> {
+    fn get(&self, token: Gram<u8>) -> Option<usize> {
         let da = DoubleArray::new(&self.data[..]);
         da.exact_match_search(token.raw()).map(|x| x as usize)
     }

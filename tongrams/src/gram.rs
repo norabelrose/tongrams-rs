@@ -4,35 +4,45 @@ use crate::TOKEN_SEPARATOR;
 
 /// Handler of a gram.
 #[derive(Clone, Copy, Eq)]
-pub struct Gram<'a> {
-    data: &'a [u8],
+pub struct Gram<'a, T: Clone> {
+    data: &'a [T],
 }
 
-impl<'a> Gram<'a> {
+impl<'a, T: Clone> Gram<'a, T> {
     /// Creates a [`Gram`] from a byte slice.
     #[inline]
-    pub const fn new(data: &'a [u8]) -> Self {
+    pub const fn new(data: &'a [T]) -> Self {
         Self { data }
-    }
-
-    /// Creates a [`Gram`] from a string.
-    #[inline]
-    pub const fn from_str(data: &'a str) -> Self {
-        Self {
-            data: data.as_bytes(),
-        }
     }
 
     /// Copies `self` into a new `Vec`.
     #[inline]
-    pub fn to_vec(self) -> Vec<u8> {
+    pub fn to_vec(self) -> Vec<T> {
         self.data.to_vec()
     }
 
     /// Gets the reference to the byte slice.
     #[inline]
-    pub const fn raw(&self) -> &[u8] {
+    pub const fn raw(&self) -> &[T] {
         self.data
+    }
+}
+
+impl<'a, T: Clone + PartialEq> PartialEq for Gram<'a, T> {
+    fn eq(&self, other: &Self) -> bool {
+        self.data == other.data
+    }
+}
+
+/// The Debug and Display traits are only implemented for `Gram<u8>`.
+
+impl<'a> Gram<'a, u8> {
+    /// Creates a [`Gram<u8>`] from a string.
+    #[inline]
+    pub const fn from_str(data: &'a str) -> Self {
+        Self {
+            data: data.as_bytes(),
+        }
     }
 
     /// Pops the last token.
@@ -118,19 +128,13 @@ impl<'a> Gram<'a> {
     }
 }
 
-impl<'a> PartialEq for Gram<'a> {
-    fn eq(&self, other: &Self) -> bool {
-        self.data == other.data
-    }
-}
-
-impl<'a> fmt::Display for Gram<'a> {
+impl<'a> fmt::Display for Gram<'a, u8> {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{}", String::from_utf8(self.to_vec()).unwrap())
     }
 }
 
-impl<'a> fmt::Debug for Gram<'a> {
+impl<'a> fmt::Debug for Gram<'a, u8> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let data = String::from_utf8(self.data.to_vec()).unwrap();
         f.debug_struct("Gram").field("data", &data).finish()
